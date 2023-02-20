@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+</head>
+
+
+<body>
+    <header>
+        <h1>Welcome to my online quiz !</h1>
+        <h2>
+            To start a quiz, please click on one of the theme below.
+        </h2>
+    </header>
+
+    <main>
+        {% for theme in themes %}
+            <h3>
+                <a href="{% url 'quiz_pages:quiz' theme.id %}">
+                    {{ theme.theme_text }}
+                </a>
+            </h3>
+        {% endfor %}
+        <p>Don't find a theme that is interesting to you ?</p>
+        <p>Add your own theme by clicking 
+            <a href="{% url 'quiz_pages:add_quiz' %}">
+                here
+            </a>
+        </p>
+    </main>
+</body>
+
+
+</html>

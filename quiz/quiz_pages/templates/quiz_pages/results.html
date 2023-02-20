@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ theme.them_text }} results</title>
+</head>
+<body>
+    <h1>You've answerd to the {{ theme.theme_text }} quiz !</h1>
+    <h2>Have a look at your answers down there !</h2>
+    {% for question, answer in answers.items %}
+        <h3>{{ question.question_text }}</h3>
+        {% for choice in question.choice_set.all %}
+            {% if choice.is_valid_answer %}
+                <p class="good" style="color : green">{{ choice.choice_text }}</p>
+            {% elif choice == answer and not choice.is_valid_answer %}
+                <p class="bad" style="color : red">{{ choice.choice_text }}</p>
+            {% else %}
+                <p>{{ choice.choice_text }}</p>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+
+    <p>
+        <a href="{% url 'quiz_pages:index' %}">Answer another quiz !</a>
+    </p>
+</body>
+</html>

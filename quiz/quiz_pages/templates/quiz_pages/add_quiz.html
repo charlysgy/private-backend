@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add your own quiz</title>
+</head>
+<body>
+    <p>To quit this page and get back to the home page
+        <a href="{% url 'quiz_pages:index' %}">
+            click here
+        </a>
+    </p>
+    {% if error_message %}
+        <h1 style="color: red;">{{error_message}}</h1>
+    {% endif %}
+
+    <h3>You can add at most 10 questions to your quiz.</h3>
+    <h3>You must write 4 choices per question</h3>
+    <h3>Only one of the choices must be the correct answer</h3>
+
+    <form action="{% url 'quiz_pages:check_form' %}" method="post">
+        {% csrf_token %}
+        <label for="theme_input">Theme</label>
+        <input type="text" name="theme_text" id="theme_input">
+        <div style="display: flexbox; flex-direction: column; justify-content:space-around; min-height: 100vh;">
+            {% for i in '0123456789'|make_list %}
+                <div style="padding: 10px;">
+                    <div style="margin: 10px;">
+                        <label for="question_input_{{ i }}">Question {{ i }}</label>
+                        <input type="text" name="question_text_{{ i }}" id="question_input_{{ i }}">
+                    </div>
+                    <div style="margin: 10px;">
+                        <label for="choice_input_{{ i }}_0">Choice 1</label>
+                        <input type="text" name="choice_text_{{ i }}_0" id="choice_input_{{ i }}_0">
+                        <label for="choice_input_{{ i }}_1">Choice 2</label>
+                        <input type="text" name="choice_text_{{ i }}_1" id="choice_input_{{ i }}_1">
+                        <label for="choice_input_{{ i }}_2">Choice 3</label>
+                        <input type="text" name="choice_text_{{ i }}_2" id="choice_input_{{ i }}_2">
+                        <label for="choice_input_{{ i }}_3">Choice 4</label>
+                        <input type="text" name="choice_text_{{ i }}_3" id="choice_input_{{ i }}_3">
+                    </div>
+                    <div style="margin: 10px;">
+                        <label for="valid_answer_{{ i }}" style="margin-left: 5px;">
+                            Valid answer is : 
+                        </label>
+                        <input type="radio" name="valid_answer_{{ i }}" value="0">
+                        <input type="radio" name="valid_answer_{{ i }}" value="1">
+                        <input type="radio" name="valid_answer_{{ i }}" value="2">
+                        <input type="radio" name="valid_answer_{{ i }}" value="3">
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <input type="submit" value="Validate">
+    </form>
+</body>
+</html>

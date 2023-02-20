@@ -1,0 +1,23 @@
+{% extends 'base_quiz.html' %}
+
+{% block title %}{{theme.theme_text}}{% endblock %}
+{% block headerh1 %}{{theme.theme_text}}{% endblock %}
+
+{% block main %}
+    <form action="{% url 'quiz_pages:results' theme.id %}" method="post">
+        {% csrf_token %}
+        {% for question in questions %}
+            <h2>{{ question.question_text }}</h2>
+            {% for choice in question.choice_set.all %}
+                <input type="radio" name="choice{{ question.id }}" value="{{ choice.id }}">
+                <label for="choice{{ choice.id }}">{{ choice.choice_text }}</label><br>
+            {% endfor %}
+        {% endfor %}
+
+        {% if error_message %}
+            <p><strong>{{ error_message }}</strong></p>
+            <p>Make sur to answer all the question before clicking the validate button</p>
+        {% endif %}
+        <input type="submit" value="Validate">
+    </form>
+{% endblock %}
